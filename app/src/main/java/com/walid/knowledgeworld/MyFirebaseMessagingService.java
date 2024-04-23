@@ -12,9 +12,10 @@ import androidx.core.app.NotificationCompat;
 
 import com.walid.knowledgeworld.MainActivity;
 import com.walid.knowledgeworld.R;
-import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 

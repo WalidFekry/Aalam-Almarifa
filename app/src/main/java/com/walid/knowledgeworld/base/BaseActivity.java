@@ -16,13 +16,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
 
     private static final String TAG = "BaseActivity";
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private CompositeDisposable p1;
     private Dialog loadingDialog;
     private Unbinder unbinder;
-
-
-    private final Handler handler = new Handler(Looper.getMainLooper());
-
 
     public Handler xoi() {
         return handler;
@@ -38,11 +35,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
 
-
     public CompositeDisposable cxs() {
         return p1;
     }
-
 
 
     @Override

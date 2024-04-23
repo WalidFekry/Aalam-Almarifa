@@ -83,12 +83,12 @@
     <string name="message_time">تاريخ الرسالة</string>
 
     <!--Ads-->
-    <string name="app_banner_admob">ca-app-pub-3354189036871191/6697169478</string>
-    <string name="app_interstitial_admob">ca-app-pub-3354189036871191/7347427233</string>
+<!--    <string name="app_banner_admob">ca-app-pub-3354189036871191/6697169478</string>-->
+<!--    <string name="app_interstitial_admob">ca-app-pub-3354189036871191/7347427233</string>-->
 
     <!-- Test Ads-->
-<!--    <string name="app_banner_admob">0</string>-->
-<!--    <string name="app_interstitial_admob">0</string>-->
+    <string name="app_banner_admob">0</string>
+    <string name="app_interstitial_admob">0</string>
 
 
 
