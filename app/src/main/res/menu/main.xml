@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="تحديث الصفحة ⏳"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_copyUrl"
+        android:orderInCategory="100"
+        android:title="نسخ رابط المقال 💡"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="الرئيسية"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_About"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_error_outline_black_24dp"
+        android:title="عن التطبيق"
+        app:showAsAction="always" />
+
+
+</menu>

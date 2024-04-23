@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "302083847083",
+    "firebase_url": "https://app-knowledge.firebaseio.com",
+    "project_id": "app-knowledge",
+    "storage_bucket": "app-knowledge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302083847083:android:db9203b15c1473de01d8ee",
+        "android_client_info": {
+          "package_name": "com.walid.knowledgeworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302083847083-0ukjuaumgeqi23a7573jcbufjf7kekvl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASqvBa5EB_Rnz4D6DkKwmYUPi6_NV4jlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302083847083-0ukjuaumgeqi23a7573jcbufjf7kekvl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

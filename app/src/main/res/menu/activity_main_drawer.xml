@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="الصفحة الرئيسية" />
+
+        <item
+            android:id="@+id/nav_2627"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="اقتباسات عشوائية" />
+
+        <item
+            android:id="@+id/nav_99"
+            android:icon="@drawable/ic_menu_send"
+            android:title="أذكار الصباح" />
+
+        <item
+            android:id="@+id/nav_990"
+            android:icon="@drawable/ic_menu_send"
+            android:title="أذكار المساء" />
+
+
+
+        <item
+            android:id="@+id/nav_2626"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            android:title="الرقية الشرعية" />
+
+
+
+
+    </group>
+
+    <item android:title="أقسام التطبيق 👇">
+        <menu>
+
+            <item
+                android:id="@+id/nav_qism_1"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="مقالات عامة" />
+            <item
+                android:id="@+id/nav_qism_2"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="قصص" />
+            <item
+                android:id="@+id/nav_qism_3"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="معلومات" />
+            <item
+                android:id="@+id/nav_qism_4"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="طب و صحة" />
+            <item
+                android:id="@+id/nav_qism_5"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="تنمية بشرية" />
+            <item
+                android:id="@+id/nav_qism_6"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="الدين النصيحة" />
+            <item
+                android:id="@+id/nav_qism_7"
+                android:icon="@drawable/ic_brightness_6_black_24dp"
+                android:title="منوعات" />
+
+
+        </menu>
+    </item>
+
+    <item android:title="معلومات عن التطبيق 🧐">
+        <menu>
+
+            <item
+                android:id="@+id/nav_4"
+                android:icon="@drawable/ic_menu_share"
+                android:title="مشاركة التطبيق" />
+            <item
+                android:id="@+id/nav_5"
+                android:icon="@drawable/ic_star_black_24dp"
+                android:title="تقييم التطبيق" />
+
+            <item
+                android:id="@+id/nav_6"
+                android:icon="@drawable/ic_call_black_24dp"
+                android:title="تقديم اقتراح / اتصل بنا " />
+            <item
+                android:id="@+id/nav_7"
+                android:icon="@drawable/facebook"
+                android:title="صفحة الفيسبوك " />
+            <item
+                android:id="@+id/nav_8"
+                android:icon="@drawable/facebook_group"
+                android:title="جروب الفيسبوك " />
+            <item
+                android:id="@+id/nav_3"
+                android:icon="@drawable/ic_security_black_24dp"
+                android:title="سياسة الخصوصية" />
+            <item
+                android:id="@+id/nav_2"
+                android:icon="@drawable/ic_apps_black_24dp"
+                android:title=" المزيد من التطبيقات المجانية" />
+        </menu>
+    </item>
+
+</menu>
