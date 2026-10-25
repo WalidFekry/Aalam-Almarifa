@@ -2,20 +2,15 @@ package com.walid.knowledgeworld.qoutes;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.walid.knowledgeworld.R;
@@ -42,28 +37,14 @@ public class QoutesActivity extends BaseActivity {
 
     private static final String TAG = "QoutesActivity";
     private static final String API_URL = "https://post.walid-fekry.com/auto_notification/auto_notification_apps/api_post_apps.php";
-
+    private final OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(10, TimeUnit.SECONDS).build();
     private ActivityQoutesBinding binding;
     private List<new_item_post> list2;
     private InterstitialAd mInterstitialAd;
 
-    private final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .build();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        WindowInsetsControllerCompat insetsController =
-                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-        if (insetsController != null) {
-            insetsController.hide(WindowInsetsCompat.Type.statusBars());
-            insetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-        }
-
         binding = ActivityQoutesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -97,9 +78,7 @@ public class QoutesActivity extends BaseActivity {
     }
 
     private void fetchQuotesData() {
-        Request request = new Request.Builder()
-                .url(API_URL)
-                .build();
+        Request request = new Request.Builder().url(API_URL).build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
