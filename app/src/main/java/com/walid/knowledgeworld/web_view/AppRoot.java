@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.google.android.gms.ads.MobileAds;
+
 public class AppRoot extends Application {
 
     public static final String CHANNEL_ID = "Remote_notification_fire_base_new";
@@ -13,6 +15,11 @@ public class AppRoot extends Application {
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
+        initializeMobileAds();
+    }
+
+    private void initializeMobileAds() {
+        new Thread(() -> MobileAds.initialize(this, initializationStatus -> {})).start();
     }
 
     private void createNotificationChannel() {

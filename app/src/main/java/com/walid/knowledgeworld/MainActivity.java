@@ -220,7 +220,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setUpAds() {
-        MobileAds.initialize(this, initializationStatus -> {});
         AdRequest adRequest = new AdRequest.Builder().build();
 
         binding.appBarMain.contentMain.adView.loadAd(adRequest);

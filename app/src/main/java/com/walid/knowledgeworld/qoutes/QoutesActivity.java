@@ -78,7 +78,6 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
 
         fetchQuotesData();
 
-        MobileAds.initialize(this, initializationStatus -> {});
         AdRequest adRequest = new AdRequest.Builder().build();
 
         binding.adView2.loadAd(adRequest);
