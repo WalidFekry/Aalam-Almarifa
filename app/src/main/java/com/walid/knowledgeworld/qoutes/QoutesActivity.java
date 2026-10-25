@@ -202,8 +202,7 @@ public class QoutesActivity extends BaseActivity {
 
         Adaptersada adapter2 = new Adaptersada(list2, QoutesActivity.this);
         binding.rec2.setAdapter(adapter2);
-        Toast.makeText(QoutesActivity.this, "توجد مشكله با الاتصال تاكد ان الانترنت متاح لديك ", Toast.LENGTH_SHORT).show();
-    }
+        Toast.makeText(QoutesActivity.this, "توجد مشكلة في الاتصال، تأكد من توفر اتصال بالإنترنت.", Toast.LENGTH_SHORT).show();    }
 
     @SuppressWarnings("deprecation")
     private AdSize getAdSize() {

@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity
         final PrettyDialog pDialog = new PrettyDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
         pDialog.setTitle("تنبيه !")
-                .setMessage("المرجو التحقق من تشغيل الإنترنت كي يتم جلب البيانات الجديدة.")
+                .setMessage("يرجى التأكد من اتصالك بالإنترنت حتى تتمكن من جلب البيانات الجديدة.")
                 .setIcon(R.mipmap.ic_launcher)
                 .setAnimationEnabled(true)
                 .setMessageColor(R.color.colorPrimary)
