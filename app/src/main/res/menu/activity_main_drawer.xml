@@ -29,8 +29,6 @@
             android:icon="@drawable/ic_menu_send"
             android:title="أذكار المساء" />
 
-
-
         <item
             android:id="@+id/nav_2626"
             android:icon="@drawable/ic_baseline_favorite_24"
@@ -41,6 +39,10 @@
             android:icon="@drawable/ic_star_black_24dp"
             android:title="المفضلة" />
 
+        <item
+            android:id="@+id/nav_theme_mode"
+            android:icon="@drawable/ic_brightness_6_black_24dp"
+            android:title="مظهر التطبيق (ليلي / نهاري) 🎨" />
 
     </group>
 
@@ -75,7 +77,6 @@
                 android:id="@+id/nav_qism_7"
                 android:icon="@drawable/ic_brightness_6_black_24dp"
                 android:title="منوعات" />
-
 
         </menu>
     </item>

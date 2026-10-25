@@ -9,6 +9,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -42,6 +43,8 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
@@ -58,6 +61,7 @@ import com.walid.knowledgeworld.web_view.VideoEnabledWebView;
 import com.walid.knowledgeworld.databinding.ActivityMainBinding;
 import com.walid.knowledgeworld.qoutes.QoutesActivity;
 import com.walid.knowledgeworld.roqia.RoqiaNoIternet;
+import com.walid.knowledgeworld.utils.ThemeManager;
 
 import libs.mjn.prettydialog.PrettyDialog;
 
@@ -173,6 +177,19 @@ public class MainActivity extends AppCompatActivity
         settings.setAllowContentAccess(false);
         settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+            int nightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+            if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
+                @SuppressWarnings("deprecation")
+                int forceDarkOn = WebSettingsCompat.FORCE_DARK_ON;
+                WebSettingsCompat.setForceDark(settings, forceDarkOn);
+            } else {
+                @SuppressWarnings("deprecation")
+                int forceDarkOff = WebSettingsCompat.FORCE_DARK_OFF;
+                WebSettingsCompat.setForceDark(settings, forceDarkOff);
+            }
+        }
 
         if (!isNetworkAvailable()) {
             settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -374,7 +391,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_theme_mode) {
+            ThemeManager.showThemeSelectionDialog(this, null);
+            return true;
+        } else if (id == R.id.action_settings) {
             if (webView != null) webView.reload();
             return true;
         } else if (id == R.id.action_bookmark) {
@@ -434,7 +454,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_theme_mode) {
+            ThemeManager.showThemeSelectionDialog(this, null);
+        } else if (id == R.id.nav_home) {
             if (webView != null) webView.loadUrl(DEFAULT_URL);
         } else if (id == R.id.nav_favorites) {
             startActivity(new Intent(MainActivity.this, FavoritesActivity.class));

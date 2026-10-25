@@ -2,30 +2,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_bookmark"
-        android:orderInCategory="90"
-        android:icon="@drawable/ic_star_black_24dp"
-        android:title="إضافة للمفضلة ⭐️"
+        android:id="@+id/action_copyUrl"
+        android:orderInCategory="80"
+        android:title="نسخ رابط المقال 💡"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_zoom_in"
-        android:orderInCategory="95"
+        android:orderInCategory="81"
         android:title="تكبير الخط 🔍+"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_zoom_out"
-        android:orderInCategory="96"
+        android:orderInCategory="82"
         android:title="تصغير الخط 🔍-"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="83"
         android:title="تحديث الصفحة ⏳"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_copyUrl"
-        android:orderInCategory="101"
-        android:title="نسخ رابط المقال 💡"
+        android:id="@+id/action_theme_mode"
+        android:orderInCategory="84"
+        android:icon="@drawable/ic_brightness_6_black_24dp"
+        android:title="(ليلي / نهاري) 🎨"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_bookmark"
+        android:orderInCategory="85"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="إضافة للمفضلة ⭐️"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_home"

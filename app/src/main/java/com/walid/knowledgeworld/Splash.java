@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.walid.knowledgeworld.base.BaseActivity;
 import com.walid.knowledgeworld.databinding.ActivitySplashBinding;
 
-public class Splash extends AppCompatActivity {
+public class Splash extends BaseActivity {
 
     private ActivitySplashBinding binding;
     private final Handler handler = new Handler(Looper.getMainLooper());

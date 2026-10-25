@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.walid.knowledgeworld.R;
@@ -56,6 +57,9 @@ public class Adaptersada extends RecyclerView.Adapter<Adaptersada.Holder> {
     public void onBindViewHolder(@NonNull final Holder holder, final int position) {
         new_item_post item = list2.get(position);
         ItemReslatfoalBinding binding = holder.binding;
+
+        binding.baccc.setBackground(null);
+        binding.title.setTextColor(ContextCompat.getColor(context, R.color.quote_title_color));
 
         if (item.getTitle() != null) {
             binding.title.setText(item.getTitle().replace("_", "\n"));

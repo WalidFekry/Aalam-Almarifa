@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand colors for Dark Mode -->
+    <color name="colorPrimary">#FFA733</color>
+    <color name="colorPrimaryDark">#121824</color>
+    <color name="colorAccent">#FFA733</color>
+
+    <!-- Theme-dependent colors (Dark Mode) -->
+    <color name="bg_main">#121824</color>
+    <color name="card_bg">#1E2532</color>
+    <color name="sub_card_bg">#2A3241</color>
+    <color name="text_primary">#F3F4F6</color>
+    <color name="text_secondary">#9CA3AF</color>
+    <color name="divider_color">#374151</color>
+
+    <color name="toolbar_bg">#1A202C</color>
+    <color name="toolbar_title_color">#F3F4F6</color>
+
+    <color name="nav_drawer_bg">#1E2532</color>
+    <color name="nav_item_text">#F3F4F6</color>
+    <color name="nav_item_icon">#FFA733</color>
+
+    <color name="dialog_bg">#1E2532</color>
+    <color name="dialog_text">#F3F4F6</color>
+
+    <color name="accent_badge_bg">#3D2817</color>
+    <color name="accent_badge_text">#FFA733</color>
+
+    <color name="quote_card_stroke">#374151</color>
+    <color name="quote_title_color">#F3F4F6</color>
+
+    <color name="roqia_text_color">#E5E7EB</color>
+</resources>

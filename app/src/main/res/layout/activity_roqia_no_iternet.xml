@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_main"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:layoutDirection="rtl">
@@ -30,7 +31,6 @@
                 android:gravity="end"
                 android:layout_gravity="end">
 
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
@@ -53,7 +53,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,7 +65,6 @@
             android:layoutDirection="rtl"
             android:orientation="vertical">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,23 +72,22 @@
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/uthmanii"
                 android:text="أعوذ بالله السميع العليم من الشيطان الرجيم\n"
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/uthmanii"
                 android:textSize="22sp"
-                android:text="@string/roqia_txt_1"
-                />
+                android:text="@string/roqia_txt_1" />
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,7 +97,7 @@
                 android:text="@string/roqiz_txt2"/>
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +107,7 @@
                 android:text="@string/roqia_txt_3"/>
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,7 +117,7 @@
                 android:text="@string/roqia_txt_4"/>
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,7 +127,7 @@
                 android:text="@string/roqia_txt_5"/>
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,7 +137,7 @@
                 android:text="@string/roqia_txt_6"/>
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,7 +147,7 @@
                 android:text="@string/roqia_txt_7"/>
 
             <TextView
-                android:textColor="@color/black"
+                android:textColor="@color/roqia_text_color"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -158,7 +155,6 @@
                 android:fontFamily="@font/uthmanii"
                 android:textSize="22sp"
                 android:text="@string/roqia_txt_8"/>
-
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -3,11 +3,10 @@ package com.walid.knowledgeworld.roqia;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.walid.knowledgeworld.base.BaseActivity;
 import com.walid.knowledgeworld.databinding.ActivityRoqiaNoIternetBinding;
 
-public class RoqiaNoIternet extends AppCompatActivity {
+public class RoqiaNoIternet extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

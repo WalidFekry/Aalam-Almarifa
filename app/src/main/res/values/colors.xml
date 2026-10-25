@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Brand colors -->
     <color name="colorPrimary">#FF8000</color>
     <color name="colorPrimaryDark">#D66A00</color>
     <color name="colorAccent">#D66A00</color>
 
+    <!-- Theme-dependent colors (Light Mode) -->
+    <color name="bg_main">#F8F9FA</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="sub_card_bg">#F3F4F6</color>
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="divider_color">#E5E7EB</color>
+
+    <color name="toolbar_bg">#FF8000</color>
+    <color name="toolbar_title_color">#FFFFFF</color>
+
+    <color name="nav_drawer_bg">#FFFFFF</color>
+    <color name="nav_item_text">#1F2937</color>
+    <color name="nav_item_icon">#FF8000</color>
+
+    <color name="dialog_bg">#FFFFFF</color>
+    <color name="dialog_text">#1F2937</color>
+
+    <color name="accent_badge_bg">#FFE0B2</color>
+    <color name="accent_badge_text">#E65100</color>
+
+    <color name="quote_card_stroke">#212649</color>
+    <color name="quote_title_color">#29292B</color>
+
+    <color name="roqia_text_color">#1F2937</color>
+
+    <!-- Legacy / Utility colors -->
     <item name="black" type="color">#FF040303</item>
 
     <item name="blue" type="color">#FF33B5E5</item>

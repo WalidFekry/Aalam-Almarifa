@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 import com.google.android.gms.ads.MobileAds;
+import com.walid.knowledgeworld.utils.ThemeManager;
 
 public class AppRoot extends Application {
 
@@ -14,6 +15,7 @@ public class AppRoot extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ThemeManager.init(this);
         createNotificationChannel();
         initializeMobileAds();
     }
