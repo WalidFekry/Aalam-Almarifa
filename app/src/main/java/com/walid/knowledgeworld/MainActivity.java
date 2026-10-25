@@ -39,6 +39,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
@@ -75,7 +78,6 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         webView = binding.appBarMain.contentMain.webView;
         View nonVideoLayout = binding.appBarMain.contentMain.nonVideoLayout;
@@ -130,29 +133,37 @@ public class MainActivity extends AppCompatActivity
         };
 
         webChromeClient.setOnToggledFullscreen(fullscreen -> {
-            WindowManager.LayoutParams attrs = getWindow().getAttributes();
+            WindowInsetsControllerCompat insetsController =
+                    WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
             if (fullscreen) {
-                attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-                attrs.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().hide();
                 }
+                if (insetsController != null) {
+                    insetsController.hide(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
+                    insetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                }
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             } else {
-                attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-                attrs.flags &= ~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().show();
                 }
+                if (insetsController != null) {
+                    insetsController.show(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
+                }
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
-            getWindow().setAttributes(attrs);
         });
 
         webView.setWebChromeClient(webChromeClient);
         webView.setWebViewClient(new InsideWebViewClient());
 
         WebSettings settings = webView.getSettings();
-        settings.setAllowFileAccess(true);
-        settings.setJavaScriptEnabled(true);
+        settings.setAllowFileAccess(false);
+        settings.setAllowContentAccess(false);
+        @SuppressLint("SetJavaScriptEnabled")
+        boolean jsEnabled = true;
+        settings.setJavaScriptEnabled(jsEnabled);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         if (!isNetworkAvailable()) {
@@ -186,17 +197,17 @@ public class MainActivity extends AppCompatActivity
 
     private void showExitDialog() {
         new PrettyDialog(this)
-                .setTitle("هل تريد الخروج من تطبيق عالم المعرفة 🤔")
+                .setTitle("هل تريد الخروج من تطبيق عالم المعرفة")
                 .setMessage("إذا اعجبك تطبيق \" عالم المعرفة \" لا تترد في أن تدعمنا بتقييمك للتطبيق لنستمر دائماً في اسعادك و نشر المزيد 🌸")
                 .setIcon(R.drawable.icon_log_out)
                 .addButton(
-                        "خروج 😢",
+                        "خروج",
                         R.color.pdlg_color_white,
                         R.color.colorAccent,
                         this::finish
                 )
                 .addButton(
-                        "تقييم التطبيق ❤",
+                        "تقييم التطبيق",
                         R.color.pdlg_color_white,
                         R.color.colorAccent,
                         () -> {
@@ -358,7 +369,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.action_settings) {
             if (webView != null) webView.reload();
-            showAdsInterstitial();
             return true;
         } else if (id == R.id.action_copyUrl) {
             if (webView != null) {
@@ -398,8 +408,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_990) {
             if (webView != null) webView.loadUrl("https://app-knowledge-world.blogspot.com/2019/07/blog-post_35.html");
         } else if (id == R.id.nav_2626) {
-            startActivity(new Intent(MainActivity.this, RoqiaNoIternet.class));
             showAdsInterstitial();
+            startActivity(new Intent(MainActivity.this, RoqiaNoIternet.class));
         } else if (id == R.id.nav_2627) {
             startActivity(new Intent(MainActivity.this, QoutesActivity.class));
         } else if (id == R.id.nav_4) {
