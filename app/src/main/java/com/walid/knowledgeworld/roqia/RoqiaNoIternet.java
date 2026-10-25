@@ -1,22 +1,28 @@
 package com.walid.knowledgeworld.roqia;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import com.walid.knowledgeworld.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.walid.knowledgeworld.databinding.ActivityRoqiaNoIternetBinding;
 
 public class RoqiaNoIternet extends AppCompatActivity {
+
+    private ActivityRoqiaNoIternetBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_roqia_no_iternet);
+        binding = ActivityRoqiaNoIternetBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        if (binding.backButton != null) {
+            binding.backButton.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        }
     }
 
     public void onBackClicked(View view) {
-        onBackPressed();
+        getOnBackPressedDispatcher().onBackPressed();
     }
 }

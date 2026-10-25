@@ -1,53 +1,42 @@
 package com.walid.knowledgeworld;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.walid.knowledgeworld.databinding.ActivitySplashBinding;
 
-public class Splash extends Activity {
+public class Splash extends AppCompatActivity {
 
-
+    private ActivitySplashBinding binding;
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-
-
-        Thread timer = new Thread() {
-            public void run() {
-                try {
-                    sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                } finally {
-
-                    Intent main = new Intent(Splash.this , MainActivity.class);
-                    startActivity(main);
-                    finish();
-                }
+        runnable = () -> {
+            if (!isFinishing() && !isDestroyed()) {
+                Intent intent = new Intent(Splash.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         };
-        timer.start();
 
-
-
-
-
-}
+        handler.postDelayed(runnable, 500);
     }
+
+    @Override
+    protected void onDestroy() {
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
+        }
+        super.onDestroy();
+    }
+}

@@ -1,4 +1,4 @@
-package com.walid.knowledgeworld.File_UIX;
+package com.walid.knowledgeworld.web_view;
 
 import android.media.MediaPlayer;
 import android.view.SurfaceView;

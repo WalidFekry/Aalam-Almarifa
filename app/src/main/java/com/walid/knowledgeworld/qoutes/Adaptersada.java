@@ -2,6 +2,8 @@ package com.walid.knowledgeworld.qoutes;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -10,41 +12,28 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.walid.knowledgeworld.R;
-import com.airbnb.lottie.LottieAnimationView;
-
-import net.steamcrafted.materialiconlib.MaterialIconView;
+import com.walid.knowledgeworld.databinding.ItemReslatfoalBinding;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
-public class Adaptersada  extends RecyclerView.Adapter<Adaptersada.holder2> {
-    List<new_item_post> list2;
-    Context context;
+public class Adaptersada extends RecyclerView.Adapter<Adaptersada.Holder> {
 
-    private boolean enableSave;
-
-    public void setEnableSave(boolean enableSave) {
-        this.enableSave = enableSave;
-    }
+    private final List<new_item_post> list2;
+    private final Context context;
+    private final Random random = new Random();
 
     public Adaptersada(List<new_item_post> list2, Context context) {
         this.list2 = list2;
         this.context = context;
     }
-
 
     public List<new_item_post> getItems() {
         return list2;
@@ -52,122 +41,108 @@ public class Adaptersada  extends RecyclerView.Adapter<Adaptersada.holder2> {
 
     @NonNull
     @Override
-    public holder2 onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-        View view2 = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_reslatfoal, viewGroup, false);
-        return new holder2(view2);
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemReslatfoalBinding binding = ItemReslatfoalBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+        return new Holder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final holder2 holder2, final int possition) {
-        holder2.title.setText(list2.get(possition).getTitle().replace("_", "\n"));
-        holder2.messageNumber.setText(String.valueOf(list2.get(possition).getId()));
-        if (list2.get(possition).getCreatedAt() != null) {
-            holder2.messageTime.setText(list2.get(possition).getCreatedAt().split(" ")[0]);
+    public void onBindViewHolder(@NonNull final Holder holder, final int position) {
+        new_item_post item = list2.get(position);
+        ItemReslatfoalBinding binding = holder.binding;
+
+        if (item.getTitle() != null) {
+            binding.title.setText(item.getTitle().replace("_", "\n"));
         } else {
-            String currentTime = "2021-01-05";
-            holder2.messageTime.setText(currentTime);
+            binding.title.setText("");
         }
-        holder2.sharequran.setOnClickListener(v -> {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_SUBJECT," تطبيق  (عالم المعرفة) ");
-            sendIntent.putExtra(Intent.EXTRA_TEXT,list2.get(possition).getTitle()+ "\n"+
+
+        binding.messageNumber.setText(String.valueOf(item.getId()));
+
+        if (item.getCreatedAt() != null && !item.getCreatedAt().isEmpty()) {
+            binding.messageTime.setText(item.getCreatedAt().split(" ")[0]);
+        } else {
+            binding.messageTime.setText("2021-01-05");
+        }
+
+        binding.sharequran.setOnClickListener(v -> {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, " تطبيق (عالم المعرفة) ");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, item.getTitle() + "\n" +
                     "تم النسخ من تطبيق عالم المعرفة 💙 👇 https://t.co/nEevBOppAH \n");
             sendIntent.setType("text/plain");
-            context.startActivity(Intent.createChooser(sendIntent,"مشاركه نصوص من  تطبيق عالم المعرفة :"));
+            context.startActivity(Intent.createChooser(sendIntent, "مشاركه نصوص من تطبيق عالم المعرفة :"));
         });
-        holder2.starquran.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.co/nEevBOppAH")));
+
+        binding.starquran.setOnClickListener(v ->
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.co/nEevBOppAH")))
+        );
+
+        binding.qumsgwhats.setOnClickListener(v -> {
+            Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+            whatsappIntent.setType("text/plain");
+            whatsappIntent.setPackage("com.whatsapp");
+            whatsappIntent.putExtra(Intent.EXTRA_TEXT, binding.title.getText().toString());
+            try {
+                context.startActivity(whatsappIntent);
+            } catch (ActivityNotFoundException ex) {
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
             }
         });
 
-
-        holder2.whatsahdes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, holder2.title.getText().toString());
-                try {
-                    Objects.requireNonNull(context).startActivity(whatsappIntent);
-                } catch (ActivityNotFoundException ex) {
-                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")));
-                }
-            }
-        });
-
-
-        holder2.copyquran.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                android.content.ClipData clip = android.content.ClipData.newPlainText("", list2.get(possition).getTitle() + "\n" +
-                        "\n" + "تم نسخ هذا النص من تطبيق عالم المعرفة ^_^");
+        binding.copyquran.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboard != null) {
+                ClipData clip = ClipData.newPlainText("quote", item.getTitle() + "\n\nتم نسخ هذا النص من تطبيق عالم المعرفة ^_^");
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(context, "تم نسخ النص - قم بمشاركتة الآن مع أصدقائك", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        holder2.itemView.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onClick(View v) {
-                final MediaPlayer mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.clikkk);
-                mediaPlayer.start();
-                Resources res = context.getResources();
-                final TypedArray myImages = res.obtainTypedArray(R.array.image);
-                final Random random = new Random();
-                int randomInt = random.nextInt(myImages.length());
-                int drawableID = myImages.getResourceId(randomInt, -1);
-                holder2.baccc.setBackgroundResource(drawableID);
-                holder2.title.setTextColor(Color.WHITE);
-
             }
         });
 
+        holder.itemView.setOnClickListener(v -> {
+            try {
+                MediaPlayer mediaPlayer = MediaPlayer.create(v.getContext(), R.raw.clikkk);
+                if (mediaPlayer != null) {
+                    mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+                    mediaPlayer.start();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-
+            Resources res = context.getResources();
+            TypedArray myImages = res.obtainTypedArray(R.array.image);
+            try {
+                if (myImages.length() > 0) {
+                    int randomInt = random.nextInt(myImages.length());
+                    int drawableID = myImages.getResourceId(randomInt, -1);
+                    if (drawableID != -1) {
+                        binding.baccc.setBackgroundResource(drawableID);
+                        binding.title.setTextColor(Color.WHITE);
+                    }
+                }
+            } finally {
+                myImages.recycle();
+            }
+        });
     }
-
-
 
     @Override
     public int getItemCount() {
-        return list2.size();
+        return list2 != null ? list2.size() : 0;
     }
 
     public interface OnMessengerClick {
         void onMessengerItemClick(new_item_post item);
     }
 
-    public static class holder2 extends RecyclerView.ViewHolder {
-        MaterialIconView whatsahdes, messenger, copyquran;
-        TextView title;
-        //        CardView carrd;
-        LinearLayout baccc, bodyPicture;
-        LottieAnimationView starquran, sharequran;
+    public static class Holder extends RecyclerView.ViewHolder {
+        final ItemReslatfoalBinding binding;
 
-        AppCompatTextView messageNumber;
-        AppCompatTextView messageTime;
-
-        LinearLayout time;
-
-        public holder2(@NonNull View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            sharequran = (LottieAnimationView) itemView.findViewById(R.id.sharequran);
-            starquran = (LottieAnimationView) itemView.findViewById(R.id.starquran);
-            copyquran = (MaterialIconView) itemView.findViewById(R.id.copyquran);
-            whatsahdes = (MaterialIconView) itemView.findViewById(R.id.qumsgwhats);
-            baccc = (LinearLayout) itemView.findViewById(R.id.baccc);
-            bodyPicture = itemView.findViewById(R.id.body_picture);
-            messageNumber = itemView.findViewById(R.id.message_number);
-            messageTime = itemView.findViewById(R.id.message_time);
-            time = itemView.findViewById(R.id.time);
+        public Holder(@NonNull ItemReslatfoalBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

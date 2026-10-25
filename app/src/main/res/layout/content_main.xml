@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.walid.knowledgeworld.File_UIX.VideoEnabledWebView
+        <com.walid.knowledgeworld.web_view.VideoEnabledWebView
             android:id="@+id/webView"
             android:layout_above="@+id/adView"
             android:layout_width="match_parent"

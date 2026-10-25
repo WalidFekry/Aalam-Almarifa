@@ -10,12 +10,12 @@
 
     <application
         android:networkSecurityConfig="@xml/network_security_config"
-        android:name=".File_UIX.MyAPp"
+        android:name=".web_view.AppRoot"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
@@ -67,7 +67,6 @@
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

@@ -9,36 +9,19 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import io.reactivex.disposables.CompositeDisposable;
-
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
-
 
     private static final String TAG = "BaseActivity";
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private CompositeDisposable p1;
     private Dialog loadingDialog;
-
-    public Handler xoi() {
-        return handler;
-    }
-
-
 
     public Handler getHandler() {
         return handler;
     }
 
-
-    public CompositeDisposable cxs() {
-        return p1;
-    }
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        p1 = new CompositeDisposable();
     }
 
     @Override
@@ -72,13 +55,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
     @Override
     public void hideKeyboard() {
-
+        // Option to implement soft keyboard hiding if needed
     }
 
     @Override
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
-        cxs().dispose();
         super.onDestroy();
     }
 }

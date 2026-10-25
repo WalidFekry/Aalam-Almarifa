@@ -1,4 +1,4 @@
-package com.walid.knowledgeworld.File_UIX;
+package com.walid.knowledgeworld.web_view;
 
 /**
  * Created by mouad on 29/04/2018.
