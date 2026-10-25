@@ -10,11 +10,6 @@
             android:title="الصفحة الرئيسية" />
 
         <item
-            android:id="@+id/nav_favorites"
-            android:icon="@drawable/ic_star_black_24dp"
-            android:title="المفضلة" />
-
-        <item
             android:id="@+id/nav_daily_fact"
             android:icon="@drawable/ic_brightness_6_black_24dp"
             android:title="معلومة اليوم" />
@@ -41,7 +36,10 @@
             android:icon="@drawable/ic_baseline_favorite_24"
             android:title="الرقية الشرعية" />
 
-
+        <item
+            android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="المفضلة" />
 
 
     </group>
