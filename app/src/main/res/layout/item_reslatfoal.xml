@@ -203,18 +203,19 @@
                             android:layout_height="35dp"
                             android:layout_margin="5dp"
                             android:scaleType="center"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.019"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
                             app:materialIcon="content_copy"
                             app:materialIconColor="#EE9892"
-                            app:materialIconSize="35dp"
-                            tools:ignore="MissingConstraints" />
+                            app:materialIconSize="35dp" />
 
-
+                        <net.steamcrafted.materialiconlib.MaterialIconView
+                            android:id="@+id/btn_image_quote"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="5dp"
+                            android:scaleType="center"
+                            app:materialIcon="image"
+                            app:materialIconColor="#FF8000"
+                            app:materialIconSize="35dp" />
 
                         <net.steamcrafted.materialiconlib.MaterialIconView
                             android:id="@+id/qumsgwhats"

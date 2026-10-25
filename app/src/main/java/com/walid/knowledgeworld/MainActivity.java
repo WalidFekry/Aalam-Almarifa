@@ -49,6 +49,10 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.walid.knowledgeworld.facts.DailyFactActivity;
+import com.walid.knowledgeworld.favorites.FavoriteItem;
+import com.walid.knowledgeworld.favorites.FavoritesActivity;
+import com.walid.knowledgeworld.favorites.FavoritesManager;
 import com.walid.knowledgeworld.web_view.VideoEnabledWebChromeClient;
 import com.walid.knowledgeworld.web_view.VideoEnabledWebView;
 import com.walid.knowledgeworld.databinding.ActivityMainBinding;
@@ -118,6 +122,10 @@ public class MainActivity extends AppCompatActivity
         ViewGroup videoLayout = binding.appBarMain.contentMain.videoLayout;
         View loadingView = getLayoutInflater().inflate(R.layout.view_loading_video, videoLayout, false);
 
+        binding.appBarMain.contentMain.swipeRefreshLayout.setOnRefreshListener(() -> {
+            if (webView != null) webView.reload();
+        });
+
         VideoEnabledWebChromeClient webChromeClient = new VideoEnabledWebChromeClient(
                 nonVideoLayout, videoLayout, loadingView, webView) {
             @Override
@@ -125,6 +133,9 @@ public class MainActivity extends AppCompatActivity
                 setTitle("انتظر .. جاري التحميل ⚡");
                 if (progress == 100) {
                     setTitle(view.getTitle());
+                    if (binding != null) {
+                        binding.appBarMain.contentMain.swipeRefreshLayout.setRefreshing(false);
+                    }
                     showAdsInterstitial();
                 }
                 super.onProgressChanged(view, progress);
@@ -366,6 +377,40 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             if (webView != null) webView.reload();
             return true;
+        } else if (id == R.id.action_bookmark) {
+            if (webView != null) {
+                String url = webView.getUrl() != null ? webView.getUrl() : DEFAULT_URL;
+                String title = webView.getTitle() != null ? webView.getTitle() : "مقال - عالم المعرفة";
+                String articleId = "article_" + url.hashCode();
+                FavoriteItem favItem = new FavoriteItem(articleId, FavoriteItem.TYPE_ARTICLE, title, "", url, System.currentTimeMillis());
+                boolean isFav = FavoritesManager.getInstance(MainActivity.this).toggleFavorite(favItem);
+                if (isFav) {
+                    Toast.makeText(this, "تم حفظ المقال في المفضلة ⭐️", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "تم إزالة المقال من المفضلة", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return true;
+        } else if (id == R.id.action_zoom_in) {
+            if (webView != null) {
+                WebSettings settings = webView.getSettings();
+                int currentZoom = settings.getTextZoom();
+                if (currentZoom < 200) {
+                    settings.setTextZoom(currentZoom + 15);
+                    Toast.makeText(this, "حجم الخط: " + (currentZoom + 15) + "%", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return true;
+        } else if (id == R.id.action_zoom_out) {
+            if (webView != null) {
+                WebSettings settings = webView.getSettings();
+                int currentZoom = settings.getTextZoom();
+                if (currentZoom > 70) {
+                    settings.setTextZoom(currentZoom - 15);
+                    Toast.makeText(this, "حجم الخط: " + (currentZoom - 15) + "%", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return true;
         } else if (id == R.id.action_copyUrl) {
             if (webView != null) {
                 String url = webView.getUrl();
@@ -391,6 +436,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             if (webView != null) webView.loadUrl(DEFAULT_URL);
+        } else if (id == R.id.nav_favorites) {
+            startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
+        } else if (id == R.id.nav_daily_fact) {
+            startActivity(new Intent(MainActivity.this, DailyFactActivity.class));
         } else if (id == R.id.nav_2) {
             Intent moreApp = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/dev?id=6257553101128037563"));
             startActivity(moreApp);

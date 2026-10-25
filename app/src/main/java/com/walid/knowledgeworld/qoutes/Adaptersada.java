@@ -20,6 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.walid.knowledgeworld.R;
 import com.walid.knowledgeworld.databinding.ItemReslatfoalBinding;
+import com.walid.knowledgeworld.dialogs.QuoteImageDialog;
+import com.walid.knowledgeworld.favorites.FavoriteItem;
+import com.walid.knowledgeworld.favorites.FavoritesManager;
+import com.walid.knowledgeworld.dialogs.QuoteImageDialog;
+import com.walid.knowledgeworld.favorites.FavoritesManager;
 
 import java.util.List;
 import java.util.Random;
@@ -75,9 +80,31 @@ public class Adaptersada extends RecyclerView.Adapter<Adaptersada.Holder> {
             context.startActivity(Intent.createChooser(sendIntent, "مشاركه نصوص من تطبيق عالم المعرفة :"));
         });
 
-        binding.starquran.setOnClickListener(v ->
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.co/nEevBOppAH")))
-        );
+        binding.starquran.setOnClickListener(v -> {
+            String quoteId = "quote_" + item.getId() + "_" + (item.getTitle() != null ? item.getTitle().hashCode() : 0);
+            FavoriteItem favItem = new FavoriteItem(
+                    quoteId,
+                    FavoriteItem.TYPE_QUOTE,
+                    item.getTitle(),
+                    item.getCreatedAt(),
+                    null,
+                    System.currentTimeMillis()
+            );
+            boolean isFav = FavoritesManager.getInstance(context).toggleFavorite(favItem);
+            if (isFav) {
+                Toast.makeText(context, "تمت إضافة الاقتباس إلى المفضلة ⭐️", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "تمت إزالة الاقتباس من المفضلة", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (binding.btnImageQuote != null) {
+            binding.btnImageQuote.setOnClickListener(v -> {
+                QuoteImageDialog dialog =
+                        new QuoteImageDialog(context, item.getTitle());
+                dialog.show();
+            });
+        }
 
         binding.qumsgwhats.setOnClickListener(v -> {
             Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
