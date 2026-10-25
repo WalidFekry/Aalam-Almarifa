@@ -10,9 +10,6 @@ import com.walid.knowledgeworld.R;
 
 public class RoqiaNoIternet extends AppCompatActivity {
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, RoqiaNoIternet.class);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

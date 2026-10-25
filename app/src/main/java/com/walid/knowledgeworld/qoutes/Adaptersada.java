@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.walid.knowledgeworld.R;
 import com.airbnb.lottie.LottieAnimationView;
-import com.squareup.picasso.Picasso;
 
 import net.steamcrafted.materialiconlib.MaterialIconView;
 
@@ -68,7 +67,6 @@ public class Adaptersada  extends RecyclerView.Adapter<Adaptersada.holder2> {
             String currentTime = "2021-01-05";
             holder2.messageTime.setText(currentTime);
         }
-        Picasso.get().load(list2.get(possition).getImageurl()).into(holder2.imagggg);
         holder2.sharequran.setOnClickListener(v -> {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
@@ -151,7 +149,6 @@ public class Adaptersada  extends RecyclerView.Adapter<Adaptersada.holder2> {
         TextView title;
         //        CardView carrd;
         LinearLayout baccc, bodyPicture;
-        ImageView imagggg;
         LottieAnimationView starquran, sharequran;
 
         AppCompatTextView messageNumber;
@@ -167,7 +164,6 @@ public class Adaptersada  extends RecyclerView.Adapter<Adaptersada.holder2> {
             copyquran = (MaterialIconView) itemView.findViewById(R.id.copyquran);
             whatsahdes = (MaterialIconView) itemView.findViewById(R.id.qumsgwhats);
             baccc = (LinearLayout) itemView.findViewById(R.id.baccc);
-            imagggg = (ImageView) itemView.findViewById(R.id.imagggg);
             bodyPicture = itemView.findViewById(R.id.body_picture);
             messageNumber = itemView.findViewById(R.id.message_number);
             messageTime = itemView.findViewById(R.id.message_time);

@@ -152,18 +152,6 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         tools:text="rrr" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/imagggg"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scaleType="centerCrop"
-                            tools:ignore="ContentDescription" />
-                    </LinearLayout>
                 </LinearLayout>
 
                 <View
