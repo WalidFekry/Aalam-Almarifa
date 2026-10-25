@@ -1,14 +1,8 @@
 package com.walid.knowledgeworld.qoutes;
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
@@ -32,29 +26,37 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessengerClick {
 
     private static final String TAG = "QoutesActivity";
-    private final String apiUrl = "https://post.walid-fekry.com/auto_notification/auto_notification_apps/api_post_apps.php";
+    private static final String API_URL = "https://post.walid-fekry.com/auto_notification/auto_notification_apps/api_post_apps.php";
 
     private ActivityQoutesBinding binding;
     private List<new_item_post> list2;
     private InterstitialAd mInterstitialAd;
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    private final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         WindowInsetsControllerCompat insetsController =
                 WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         if (insetsController != null) {
@@ -66,10 +68,6 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
         setContentView(binding.getRoot());
 
         binding.backButton.setOnClickListener(v -> finish());
-
-        if (isNetworkConnected()) {
-            showAdsInterstitial();
-        }
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         binding.rec2.setLayoutManager(mLayoutManager);
@@ -89,6 +87,7 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
             @Override
             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                 mInterstitialAd = interstitialAd;
+                showAdsInterstitial();
             }
 
             @Override
@@ -98,58 +97,73 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
         });
     }
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm == null) return false;
-        Network network = cm.getActiveNetwork();
-        if (network == null) return false;
-        NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
-        return capabilities != null && (
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
-    }
-
     private void fetchQuotesData() {
-        executorService.execute(() -> {
-            boolean success = false;
-            HttpURLConnection urlConnection = null;
-            try {
-                URL url = new URL(apiUrl);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setConnectTimeout(10000);
-                urlConnection.setReadTimeout(10000);
-                int statusCode = urlConnection.getResponseCode();
-                if (statusCode == 200) {
-                    BufferedReader r = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        response.append(line);
-                    }
-                    parseResult(response.toString());
-                    success = true;
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "Error fetching quotes data", e);
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
+        Request request = new Request.Builder()
+                .url(API_URL)
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e(TAG, "Error fetching quotes data via OkHttp", e);
+                getHandler().post(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+                    loadFallbackData();
+                });
             }
 
-            final boolean fetchSuccess = success;
-            getHandler().post(() -> {
-                if (isFinishing() || isDestroyed()) return;
-
-                if (fetchSuccess && list2 != null && !list2.isEmpty()) {
-                    Adaptersada adaptersada = new Adaptersada(list2, QoutesActivity.this);
-                    binding.rec2.setAdapter(adaptersada);
-                } else {
-                    loadFallbackData();
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                boolean success = false;
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        String jsonString = responseBody.string();
+                        success = parseResult(jsonString);
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error processing OkHttp response", e);
                 }
-            });
+
+                final boolean isSuccess = success;
+                getHandler().post(() -> {
+                    if (isFinishing() || isDestroyed()) return;
+
+                    if (isSuccess && list2 != null && !list2.isEmpty()) {
+                        Adaptersada adaptersada = new Adaptersada(list2, QoutesActivity.this);
+                        binding.rec2.setAdapter(adaptersada);
+                    } else {
+                        loadFallbackData();
+                    }
+                });
+            }
         });
+    }
+
+    private boolean parseResult(String result) {
+        try {
+            JSONObject response = new JSONObject(result);
+            JSONArray postArray = response.optJSONArray("post");
+            if (postArray != null && postArray.length() > 0) {
+                List<new_item_post> parsedList = new ArrayList<>();
+                for (int i = 0; i < postArray.length(); i++) {
+                    JSONObject posts = postArray.optJSONObject(i);
+                    if (posts != null) {
+                        String title = posts.optString("title");
+                        String imageurl = posts.optString("imageurl");
+                        int id = posts.optInt("id");
+                        String createdAt = posts.optString("created_at");
+                        parsedList.add(new new_item_post(title, imageurl, id, createdAt));
+                    }
+                }
+                if (!parsedList.isEmpty()) {
+                    list2 = parsedList;
+                    return true;
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "JSON parsing error", e);
+        }
+        return false;
     }
 
     private void loadFallbackData() {
@@ -208,35 +222,7 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
         }
     }
 
-    private void parseResult(String result) {
-        try {
-            JSONObject response = new JSONObject(result);
-            JSONArray post = response.optJSONArray("post");
-            if (post != null) {
-                list2 = new ArrayList<>();
-                for (int i = 0; i < post.length(); i++) {
-                    JSONObject posts = post.optJSONObject(i);
-                    if (posts != null) {
-                        String title = posts.optString("title");
-                        String imageurl = posts.optString("imageurl");
-                        int id = posts.optInt("id");
-                        String createdAt = posts.optString("created_at");
-                        list2.add(new new_item_post(title, imageurl, id, createdAt));
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "JSON parsing error", e);
-        }
-    }
-
     @Override
     public void onMessengerItemClick(new_item_post item) {
-    }
-
-    @Override
-    protected void onDestroy() {
-        executorService.shutdown();
-        super.onDestroy();
     }
 }

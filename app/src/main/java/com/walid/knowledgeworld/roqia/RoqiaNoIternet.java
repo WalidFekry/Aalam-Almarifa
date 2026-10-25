@@ -9,20 +9,13 @@ import com.walid.knowledgeworld.databinding.ActivityRoqiaNoIternetBinding;
 
 public class RoqiaNoIternet extends AppCompatActivity {
 
-    private ActivityRoqiaNoIternetBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRoqiaNoIternetBinding.inflate(getLayoutInflater());
+        ActivityRoqiaNoIternetBinding binding = ActivityRoqiaNoIternetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (binding.backButton != null) {
-            binding.backButton.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
-        }
+        binding.backButton.setOnClickListener(v -> finish());
     }
 
-    public void onBackClicked(View view) {
-        getOnBackPressedDispatcher().onBackPressed();
-    }
 }

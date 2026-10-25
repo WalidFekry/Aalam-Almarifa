@@ -384,9 +384,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_home) {
             if (webView != null) webView.loadUrl(DEFAULT_URL);
             return true;
-        } else if (id == R.id.action_About) {
-            if (webView != null) webView.loadUrl(getString(R.string.aboutApp));
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

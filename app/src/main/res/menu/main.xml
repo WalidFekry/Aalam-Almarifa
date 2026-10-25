@@ -17,12 +17,7 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="الرئيسية"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_About"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_error_outline_black_24dp"
-        android:title="عن التطبيق"
-        app:showAsAction="always" />
+
 
 
 </menu>
