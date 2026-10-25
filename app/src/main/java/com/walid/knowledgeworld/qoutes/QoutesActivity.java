@@ -21,8 +21,6 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
-import com.rahman.dialog.Activity.SmartDialog;
-import com.rahman.dialog.Utilities.SmartDialogBuilder;
 import com.walid.knowledgeworld.R;
 import com.walid.knowledgeworld.base.BaseActivity;
 import com.walid.knowledgeworld.databinding.ActivityQoutesBinding;
@@ -64,16 +62,6 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
 
         if (isNetworkConnected()) {
             showAdsInterstitial();
-        } else {
-            new SmartDialogBuilder(QoutesActivity.this)
-                    .setTitle("ملاحظه")
-                    .setSubTitle("لمزيد من الرسائل المتجدده يوميا تاكد انك متصل بالانترنت")
-                    .setCancalable(false)
-                    .setTitleFont(Typeface.createFromAsset(getAssets(), "jazeera.ttf"))
-                    .setSubTitleFont(Typeface.createFromAsset(getAssets(), "jazeera.ttf"))
-                    .setNegativeButtonHide(true)
-                    .setPositiveButton("ok", SmartDialog::dismiss)
-                    .build().show();
         }
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
