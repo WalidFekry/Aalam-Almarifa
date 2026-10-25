@@ -8,15 +8,6 @@ public class new_item_post {
     String imageurl;
 
 
-    public new_item_post() {
-    }
-
-    public new_item_post(String title, String imageurl, int id) {
-        this.title = title;
-        this.imageurl = imageurl;
-        this.id = id;
-    }
-
     public new_item_post(String title, String imageurl, int id, String createdAt) {
         this.title = title;
         this.imageurl = imageurl;

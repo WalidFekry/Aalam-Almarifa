@@ -45,7 +45,6 @@ import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.navigation.NavigationView;
@@ -161,9 +160,7 @@ public class MainActivity extends AppCompatActivity
         WebSettings settings = webView.getSettings();
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
-        @SuppressLint("SetJavaScriptEnabled")
-        boolean jsEnabled = true;
-        settings.setJavaScriptEnabled(jsEnabled);
+        settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
         if (!isNetworkAvailable()) {

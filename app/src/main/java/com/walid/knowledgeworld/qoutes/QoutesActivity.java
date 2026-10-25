@@ -38,7 +38,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessengerClick {
+public class QoutesActivity extends BaseActivity {
 
     private static final String TAG = "QoutesActivity";
     private static final String API_URL = "https://post.walid-fekry.com/auto_notification/auto_notification_apps/api_post_apps.php";
@@ -190,6 +190,7 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
         list2.add(new new_item_post(getResources().getString(R.string.my21)));
         list2.add(new new_item_post(getResources().getString(R.string.my22)));
         list2.add(new new_item_post(getResources().getString(R.string.my23)));
+        list2.add(new new_item_post(getResources().getString(R.string.my25)));
         list2.add(new new_item_post(getResources().getString(R.string.my26)));
         list2.add(new new_item_post(getResources().getString(R.string.my27)));
         list2.add(new new_item_post(getResources().getString(R.string.my28)));
@@ -219,9 +220,5 @@ public class QoutesActivity extends BaseActivity implements Adaptersada.OnMessen
         } else {
             Log.d(TAG, "The interstitial ad wasn't ready yet.");
         }
-    }
-
-    @Override
-    public void onMessengerItemClick(new_item_post item) {
     }
 }

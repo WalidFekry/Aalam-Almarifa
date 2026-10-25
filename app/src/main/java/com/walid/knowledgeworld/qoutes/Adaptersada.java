@@ -133,10 +133,6 @@ public class Adaptersada extends RecyclerView.Adapter<Adaptersada.Holder> {
         return list2 != null ? list2.size() : 0;
     }
 
-    public interface OnMessengerClick {
-        void onMessengerItemClick(new_item_post item);
-    }
-
     public static class Holder extends RecyclerView.ViewHolder {
         final ItemReslatfoalBinding binding;
 

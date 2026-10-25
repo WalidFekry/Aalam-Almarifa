@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
 
-    private static final String TAG = "BaseActivity";
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Dialog loadingDialog;
 

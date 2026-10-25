@@ -50,8 +50,7 @@
                 android:id="@+id/back_button"
                 android:layout_width="40dp"
                 android:layout_height="35dp"
-                android:background="@drawable/ic_back_button"
-                android:onClick="onBackClicked" />
+                android:background="@drawable/ic_back_button" />
 
         </androidx.appcompat.widget.Toolbar>
 
