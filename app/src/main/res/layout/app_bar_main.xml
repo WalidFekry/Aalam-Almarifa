@@ -28,9 +28,10 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="10dp"
         tools:context=".MainActivity">
 
-        <Button
+        <ImageButton
             android:id="@+id/button5"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -38,10 +39,13 @@
             android:layout_alignLeft="@+id/button4"
             android:layout_alignStart="@+id/button4"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/messenger"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Messenger"
+            android:scaleType="fitCenter"
+            android:src="@drawable/messenger"
             android:visibility="invisible" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button4"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -49,10 +53,13 @@
             android:layout_alignLeft="@+id/button3"
             android:layout_alignStart="@+id/button3"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/icon_face"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Facebook"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_face"
             android:visibility="invisible" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button3"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -60,10 +67,13 @@
             android:layout_alignLeft="@+id/button2"
             android:layout_alignStart="@+id/button2"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/icon_twitter"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Twitter"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_twitter"
             android:visibility="invisible" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button2"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -71,10 +81,13 @@
             android:layout_alignLeft="@+id/button1"
             android:layout_alignStart="@+id/button1"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/icon_whatsp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="WhatsApp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_whatsp"
             android:visibility="invisible" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button1"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -84,7 +97,10 @@
             android:layout_marginBottom="50dp"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/icon_plus" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Share Menu"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_plus" />
 
     </RelativeLayout>
 
