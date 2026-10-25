@@ -79,9 +79,9 @@
     <string name="message_time">تاريخ الرسالة</string>
 
 
-    <!-- Test Ads-->
-    <string name="app_banner_admob">0</string>
-    <string name="app_interstitial_admob">0</string>
+    <!-- Test Ads -->
+    <string name="app_banner_admob">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="app_interstitial_admob">ca-app-pub-3940256099942544/1033173712</string>
 
 
 

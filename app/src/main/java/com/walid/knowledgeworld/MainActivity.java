@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.WindowMetrics;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebSettings;
@@ -47,6 +49,8 @@ import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
@@ -140,7 +144,6 @@ public class MainActivity extends AppCompatActivity
                     if (binding != null) {
                         binding.appBarMain.contentMain.swipeRefreshLayout.setRefreshing(false);
                     }
-                    showAdsInterstitial();
                 }
                 super.onProgressChanged(view, progress);
             }
@@ -244,16 +247,37 @@ public class MainActivity extends AppCompatActivity
                 .show();
     }
 
+    @SuppressWarnings("deprecation")
+    private AdSize getAdSize() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int adWidthPixels = displayMetrics.widthPixels;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
+            adWidthPixels = windowMetrics.getBounds().width();
+        }
+        float density = displayMetrics.density;
+        int adWidth = (int) (adWidthPixels / density);
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
+    }
+
     private void setUpAds() {
+        AdView adView = new AdView(this);
+        adView.setAdUnitId(getString(R.string.app_banner_admob));
+        adView.setAdSize(getAdSize());
+
+        binding.appBarMain.contentMain.adViewContainer.removeAllViews();
+        binding.appBarMain.contentMain.adViewContainer.addView(adView);
+
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        binding.appBarMain.contentMain.adView.loadAd(adRequest);
+        adView.loadAd(adRequest);
 
         InterstitialAd.load(this, getString(R.string.app_interstitial_admob), adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                         mInterstitialAd = interstitialAd;
+                        showAdsInterstitial();
                     }
 
                     @Override
@@ -472,7 +496,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_990) {
             if (webView != null) webView.loadUrl("https://app-knowledge-world.blogspot.com/2019/07/blog-post_35.html");
         } else if (id == R.id.nav_2626) {
-            showAdsInterstitial();
             startActivity(new Intent(MainActivity.this, RoqiaNoIternet.class));
         } else if (id == R.id.nav_2627) {
             startActivity(new Intent(MainActivity.this, QoutesActivity.class));

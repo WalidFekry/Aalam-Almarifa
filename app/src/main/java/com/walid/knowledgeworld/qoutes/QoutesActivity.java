@@ -1,7 +1,10 @@
 package com.walid.knowledgeworld.qoutes;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowMetrics;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
@@ -10,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
@@ -59,9 +64,16 @@ public class QoutesActivity extends BaseActivity {
 
         fetchQuotesData();
 
+        AdView adView = new AdView(this);
+        adView.setAdUnitId(getString(R.string.app_banner_admob));
+        adView.setAdSize(getAdSize());
+
+        binding.adViewContainer2.removeAllViews();
+        binding.adViewContainer2.addView(adView);
+
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        binding.adView2.loadAd(adRequest);
+        adView.loadAd(adRequest);
 
         InterstitialAd.load(this, getString(R.string.app_interstitial_admob), adRequest, new InterstitialAdLoadCallback() {
             @Override
@@ -191,6 +203,19 @@ public class QoutesActivity extends BaseActivity {
         Adaptersada adapter2 = new Adaptersada(list2, QoutesActivity.this);
         binding.rec2.setAdapter(adapter2);
         Toast.makeText(QoutesActivity.this, "توجد مشكله با الاتصال تاكد ان الانترنت متاح لديك ", Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressWarnings("deprecation")
+    private AdSize getAdSize() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int adWidthPixels = displayMetrics.widthPixels;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowMetrics windowMetrics = getWindowManager().getCurrentWindowMetrics();
+            adWidthPixels = windowMetrics.getBounds().width();
+        }
+        float density = displayMetrics.density;
+        int adWidth = (int) (adWidthPixels / density);
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
     }
 
     private void showAdsInterstitial() {
