@@ -76,51 +76,6 @@
 
 ---
 
-## 📁 هيكل كود المشروع (Architecture & Package Structure)
-
-```
-com.walid.knowledgeworld
-│
-├── 📂 base
-│   ├── BaseActivity.java          # النشاط الرئيسي الأساسي الموفر لإدارة الثيمات والإعلانات
-│   └── IBaseView.java             # واجهة MVP للأنشطة
-│
-├── 📂 dialogs
-│   └── QuoteImageDialog.java      # نافذة تخصيص ومعاينة صورة الاقتباس
-│
-├── 📂 facts
-│   ├── DailyFactActivity.java     # واجهة عرض الحقائق اليومية
-│   └── DailyFactManager.java      # مدير المحتوى للحقائق العلمية والثقافية
-│
-├── 📂 favorites
-│   ├── FavoriteItem.java          # نموذج بيانات المفضلة
-│   ├── FavoritesActivity.java     # واجهة إدارة وعرض العناصر المفضلة
-│   ├── FavoritesAdapter.java      # محول القائمة للمفضلة
-│   └── FavoritesManager.java      # مدير التخزين المحلي للمفضلة
-│
-├── 📂 qoutes
-│   ├── Adaptersada.java           # محول قائمة الاقتباسات
-│   ├── QoutesActivity.java        # واجهة عرض وتصنيف الاقتباسات
-│   └── new_item_post.java         # نموذج بيانات الاقتباس
-│
-├── 📂 roqia
-│   └── RoqiaNoIternet.java        # واجهة الرقية الشرعية والأذكار (أوفلاين)
-│
-├── 📂 utils
-│   ├── QuoteImageGenerator.java   # محرك توليد ورسم صور الاقتباسات بدقة عالية
-│   └── ThemeManager.java          # مدير الوضع الداكن والثيمات
-│
-├── 📂 web_view
-│   ├── AppRoot.java               # فئة التطبيق الرئيسية (MultiDex Application)
-│   ├── VideoEnabledWebChromeClient.java # مشغل الفيديو ملء الشاشة في الـ WebView
-│   └── VideoEnabledWebView.java    # متصفح الويب المطور
-│
-├── MainActivity.java              # الشاشة الرئيسية والتنقل القائم على Drawer
-├── Splash.java                    # شاشة البداية المحدثة بـ ViewBinding
-└── MyFirebaseMessagingService.java # خدمة استقبال إشعارات Firebase
-```
-
----
 
 ## 📲 التحميل والمتاجر الرسمية
 
@@ -133,7 +88,6 @@ com.walid.knowledgeworld
 
 **وليد فكري (Walid Fekry)**
 - 🌐 **الموقع الرسمي:** [walid-fekry.com](https://walid-fekry.com)
-- ✉️ **التواصل:** [contact@walid-fekry.com](mailto:contact@walid-fekry.com)
-
+- ✉️ **التواصل:** [walid_fekry@hotmail.com](mailto:walid_fekry@hotmail.com)
 ---
 <p align="center">تم التطوير بـ ❤️ لتقديم تجربة إسلامية وثقافية فريدة للمستخدم العربي.</p>
