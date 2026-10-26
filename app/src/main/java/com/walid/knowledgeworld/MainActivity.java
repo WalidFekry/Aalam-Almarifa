@@ -505,7 +505,7 @@ public class MainActivity extends AppCompatActivity
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT, desc + "\n" + shareUrl);
-            startActivity(shareIntent);
+            startActivity(Intent.createChooser(shareIntent, "مشاركة التطبيق:"));
         } else if (id == R.id.nav_5) {
             Intent rateApp = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.co/nEevBOppAH?" + getPackageName()));
             startActivity(rateApp);
