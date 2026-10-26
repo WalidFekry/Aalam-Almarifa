@@ -10,14 +10,13 @@ import com.walid.knowledgeworld.databinding.ActivitySplashBinding;
 
 public class Splash extends BaseActivity {
 
-    private ActivitySplashBinding binding;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         runnable = () -> {
