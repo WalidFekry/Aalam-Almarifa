@@ -53,7 +53,9 @@ public class QoutesActivity extends BaseActivity {
         binding = ActivityQoutesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.backButton.setOnClickListener(v -> finish());
+        binding.backButton.setOnClickListener(v -> {
+            finish();
+        });
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         binding.rec2.setLayoutManager(mLayoutManager);
@@ -64,28 +66,31 @@ public class QoutesActivity extends BaseActivity {
 
         fetchQuotesData();
 
-        AdView adView = new AdView(this);
-        adView.setAdUnitId(getString(R.string.app_banner_admob));
-        adView.setAdSize(getAdSize());
+        binding.adViewContainer2.post(() -> {
+            if (isFinishing() || isDestroyed()) return;
+            AdView adView = new AdView(QoutesActivity.this);
+            adView.setAdUnitId(getString(R.string.app_banner_admob));
+            adView.setAdSize(getAdSize());
 
-        binding.adViewContainer2.removeAllViews();
-        binding.adViewContainer2.addView(adView);
+            binding.adViewContainer2.removeAllViews();
+            binding.adViewContainer2.addView(adView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = new AdRequest.Builder().build();
 
-        adView.loadAd(adRequest);
+            adView.loadAd(adRequest);
 
-        InterstitialAd.load(this, getString(R.string.app_interstitial_admob), adRequest, new InterstitialAdLoadCallback() {
-            @Override
-            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                mInterstitialAd = interstitialAd;
-                showAdsInterstitial();
-            }
+            InterstitialAd.load(QoutesActivity.this, getString(R.string.app_interstitial_admob), adRequest, new InterstitialAdLoadCallback() {
+                @Override
+                public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                    mInterstitialAd = interstitialAd;
+                    showAdsInterstitial();
+                }
 
-            @Override
-            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                mInterstitialAd = null;
-            }
+                @Override
+                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    mInterstitialAd = null;
+                }
+            });
         });
     }
 

@@ -29,6 +29,8 @@ import android.view.WindowManager;
 import android.view.WindowMetrics;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.RenderProcessGoneDetail;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         setUpAds();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            checkNotificationPermission();
+            binding.getRoot().postDelayed(this::checkNotificationPermission, 1500);
         }
     }
 
@@ -261,30 +263,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setUpAds() {
-        AdView adView = new AdView(this);
-        adView.setAdUnitId(getString(R.string.app_banner_admob));
-        adView.setAdSize(getAdSize());
+        binding.appBarMain.contentMain.adViewContainer.post(() -> {
+            if (isFinishing() || isDestroyed()) return;
+            AdView adView = new AdView(MainActivity.this);
+            adView.setAdUnitId(getString(R.string.app_banner_admob));
+            adView.setAdSize(getAdSize());
 
-        binding.appBarMain.contentMain.adViewContainer.removeAllViews();
-        binding.appBarMain.contentMain.adViewContainer.addView(adView);
+            binding.appBarMain.contentMain.adViewContainer.removeAllViews();
+            binding.appBarMain.contentMain.adViewContainer.addView(adView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = new AdRequest.Builder().build();
 
-        adView.loadAd(adRequest);
+            adView.loadAd(adRequest);
 
-        InterstitialAd.load(this, getString(R.string.app_interstitial_admob), adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        mInterstitialAd = interstitialAd;
-                        showAdsInterstitial();
-                    }
+            InterstitialAd.load(MainActivity.this, getString(R.string.app_interstitial_admob), adRequest,
+                    new InterstitialAdLoadCallback() {
+                        @Override
+                        public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                            mInterstitialAd = interstitialAd;
+                            showAdsInterstitial();
+                        }
 
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        mInterstitialAd = null;
-                    }
-                });
+                        @Override
+                        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                            mInterstitialAd = null;
+                        }
+                    });
+        });
     }
 
     private void showAdsInterstitial() {
@@ -341,6 +346,19 @@ public class MainActivity extends AppCompatActivity
         return isConnected;
     }
 
+    private Typeface cachedTypeface;
+
+    private Typeface getJazeeraTypeface() {
+        if (cachedTypeface == null) {
+            try {
+                cachedTypeface = Typeface.createFromAsset(getAssets(), "jazeera.ttf");
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading font", e);
+            }
+        }
+        return cachedTypeface;
+    }
+
     private void showNoInternetDialog() {
         final PrettyDialog pDialog = new PrettyDialog(this);
         pDialog.setCanceledOnTouchOutside(false);
@@ -352,7 +370,7 @@ public class MainActivity extends AppCompatActivity
                 .setTitleColor(R.color.colorAccent)
                 .setIconTint(R.color.pdlg_color_white)
                 .setGravity(Gravity.CENTER)
-                .setTypeface(Typeface.createFromAsset(getAssets(), "jazeera.ttf"))
+                .setTypeface(getJazeeraTypeface())
                 .addButton("حسناً", R.color.pdlg_color_white, R.color.colorPrimary, pDialog::dismiss)
                 .show();
     }
@@ -544,11 +562,44 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private static class InsideWebViewClient extends WebViewClient {
+    private class InsideWebViewClient extends WebViewClient {
+        @Override
+        public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+            if (view != null) {
+                ViewGroup parent = (ViewGroup) view.getParent();
+                if (parent != null) {
+                    parent.removeView(view);
+                }
+                view.destroy();
+            }
+            return true;
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Uri uri = request.getUrl();
+            return handleUrl(uri != null ? uri.toString() : null);
+        }
+
+        @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
+            return handleUrl(url);
+        }
+
+        private boolean handleUrl(String url) {
+            if (url == null) return false;
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                return false;
+            } else {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error launching external url: " + url, e);
+                }
+                return true;
+            }
         }
     }
 }
